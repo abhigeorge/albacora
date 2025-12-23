@@ -1,26 +1,75 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-montserrat: var(--font-montserrat), system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    font-family: var(--font-montserrat);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-fadeInUp {
+  opacity: 0; /* start hidden */
+  animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@utility animation-delay-300 {
+  animation-delay: 0.3s;
+}
+@utility animation-delay-600 {
+  animation-delay: 0.6s;
+}
+@utility animation-delay-900 {
+  animation-delay: 0.9s;
+}
+
+@utility animation-duration-1500 {
+  animation-duration: 1.5s;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@import 'swiper/css';
+@import 'swiper/css/pagination';
+
+/* Custom Swiper overrides */
+.swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
+.swiper-pagination-horizontal.swiper-pagination-bullets
+  .swiper-pagination-bullet {
+  width: 16px;
+  height: 4px;
+  border-radius: 5px;
+  margin: 0 6px;
+  background: #989898 !important;
+}
+
+.swiper-pagination {
+  bottom: 2px !important;
+}
+
+.swiper-wrapper {
+  height: max-content !important;
+  width: max-content !important;
+  padding-bottom: 64px;
+}
+
+.swiper-pagination-bullet-active {
+  background: #ffffff !important;
 }
