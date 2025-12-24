@@ -51,7 +51,7 @@ export default function TestimonialSlider() {
         {/* Header */}
         <div className="mb-16 text-center">
           <span
-            className="text-md text-gray-500 font-medium block mb-2 font-bold leading-tight tracking-wider mt-6 uppercase 
+            className="text-md text-white font-medium block mb-2 font-bold leading-tight tracking-wider mt-6 uppercase 
                      animate-fadeInUp animation-delay-300 animation-duration-1500"
           >
             TESTIMONIALS

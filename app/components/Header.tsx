@@ -11,7 +11,6 @@ const navLinks = [
   { href: '/work', label: 'Work' },
   { href: '/video', label: 'Video' },
   { href: '/bts', label: 'BTS' },
-  { href: '/posts', label: 'Blog' },
 ];
 
 export default function Header() {

@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 
 import Breadcrumb from '../components/Breadcrumb';
 import { sendFormData, FormState } from '@/lib/actions';
+import { RevealLinks } from '../components/RevealLinks';
 
 const initialState: FormState = {
   success: false,
@@ -50,7 +51,7 @@ export default function ContactPage() {
     <>
       <Breadcrumb title="Contact" className="bg-black" />
 
-      <main className="min-h-screen bg-black text-white flex items-center justify-center px-4">
+      <main className="bg-black text-white flex items-center justify-center px-4">
         <div className="w-full max-w-2xl">
           <form ref={formRef} action={formAction} className="space-y-6">
             {/* Honeypot (hidden) */}
@@ -62,9 +63,7 @@ export default function ContactPage() {
               className="hidden"
             />
 
-            {/* Name + Email (inline) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Name */}
               <div>
                 <input
                   type="text"
@@ -80,7 +79,6 @@ export default function ContactPage() {
                 )}
               </div>
 
-              {/* Email */}
               <div>
                 <input
                   type="email"
@@ -97,7 +95,6 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Message */}
             <div>
               <textarea
                 name="message"
@@ -115,6 +112,7 @@ export default function ContactPage() {
           </form>
         </div>
       </main>
+      <RevealLinks />
     </>
   );
 }
