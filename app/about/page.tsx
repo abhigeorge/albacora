@@ -1,12 +1,19 @@
-'use client';
-
+import type { Metadata } from 'next';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import michaelValverde from '@/public/michael-valverde.webp';
 import ButtonLink from '../components/ButtonLink';
 import Breadcrumb from '../components/Breadcrumb';
 import { FooterTop } from '../components/FooterTop';
+import MotionMain from '../components/MotionMain'; // ✅ client wrapper
+import MotionDiv from '../components/MotionDiv'; // optional wrapper if you make one
 
+export const metadata: Metadata = {
+  title: 'About Albacora Pictures | Miami Video Production Experts',
+  description:
+    'Learn about Albacora Pictures Inc., founded by award-winning cinematographer Michael Valverde. Over a decade of experience in film, television, and documentary production.',
+};
+
+// Animation variants (can be passed down as props to MotionDiv)
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0 },
@@ -16,23 +23,16 @@ export default function AboutPage() {
   return (
     <>
       <Breadcrumb title="About" className="bg-black" />
-      <motion.main
-        className="w-full bg-black text-white font-[var(--font-montserrat)] px-6 py-16"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-      >
+      <MotionMain>
         <section className="max-w-5xl mx-auto space-y-16">
           {/* Founder Section */}
-          <motion.div
+          <MotionDiv
             variants={fadeUp}
-            initial="hidden"
-            animate="visible"
             transition={{ duration: 0.9, ease: 'easeOut' }}
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
               {/* Image */}
-              <motion.div
+              <MotionDiv
                 className="flex justify-center"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -46,13 +46,11 @@ export default function AboutPage() {
                   className="rounded-lg object-cover"
                   priority
                 />
-              </motion.div>
+              </MotionDiv>
 
               {/* Text */}
-              <motion.div
+              <MotionDiv
                 variants={fadeUp}
-                initial="hidden"
-                animate="visible"
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
                 <h2 className="text-4xl font-bold mb-8 text-center md:text-left">
@@ -84,12 +82,12 @@ export default function AboutPage() {
                   to deliver cinematic storytelling with a{' '}
                   <strong>Miami-rooted creative perspective</strong>.
                 </p>
-              </motion.div>
+              </MotionDiv>
             </div>
-          </motion.div>
+          </MotionDiv>
 
           {/* What We Do */}
-          <motion.div
+          <MotionDiv
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
@@ -106,10 +104,10 @@ export default function AboutPage() {
               . Every project is handled with{' '}
               <strong>precision, clarity, and efficiency</strong>.
             </p>
-          </motion.div>
+          </MotionDiv>
 
           {/* Why the Name */}
-          <motion.div
+          <MotionDiv
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
@@ -125,10 +123,10 @@ export default function AboutPage() {
               <strong>culture, authenticity, and passion</strong>—values infused
               into every production.
             </p>
-          </motion.div>
+          </MotionDiv>
 
           {/* Key Facts */}
-          <motion.div
+          <MotionDiv
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
@@ -155,17 +153,17 @@ export default function AboutPage() {
                 <strong>Professional, stress-free collaboration</strong>
               </li>
             </ul>
-          </motion.div>
+          </MotionDiv>
 
           {/* Press Button */}
-          <motion.div
+          <MotionDiv
             className="flex justify-center"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <MotionDiv whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <ButtonLink
                 href="https://canvasrebel.com/meet-michael-valverde/"
                 target="_blank"
@@ -174,10 +172,10 @@ export default function AboutPage() {
               >
                 PRESS
               </ButtonLink>
-            </motion.div>
-          </motion.div>
+            </MotionDiv>
+          </MotionDiv>
         </section>
-      </motion.main>
+      </MotionMain>
       <FooterTop />
     </>
   );

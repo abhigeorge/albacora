@@ -25,7 +25,7 @@ export default function Hero() {
 
         {/* CTA Button */}
         <ButtonLink href="/about" className="mt-10">
-          Read More
+          Learn More About Albacora Pictures
         </ButtonLink>
       </div>
     </section>

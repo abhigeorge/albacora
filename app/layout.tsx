@@ -14,24 +14,46 @@ const montserrat = Montserrat({
 // 🔑 Global metadata defaults
 export const metadata: Metadata = {
   title: {
-    default: 'Abhifind Blog',
-    template: '%s | Abhifind Blog',
+    default: "Miami's Best Video Production Company | Albacora Pictures Inc.",
+    template: '%s | Albacora Pictures Inc.',
   },
   description:
-    'A Next.js + WordPress powered blog sharing insights, tutorials, and updates.',
+    "Albacora Pictures Inc. is Miami's leading video production company specializing in cinematography, videography, lighting design, and post-production. Founded by award-winning cinematographer Michael Valverde, we deliver high-end commercial shoots, corporate videos, documentaries, and travel series with technical precision and storytelling excellence.",
+  keywords: [
+    'Miami video production company',
+    'cinematography Miami',
+    'videography services Miami',
+    'corporate video production',
+    'commercial video production',
+    'documentary production Miami',
+    'lighting design',
+    'post-production Miami',
+    'film production Miami',
+    'Albacora Pictures',
+  ],
+  authors: [{ name: 'Albacora Pictures Inc.' }],
   openGraph: {
-    title: 'Abhifind Blog',
+    title: "Miami's Best Video Production Company | Albacora Pictures Inc.",
     description:
-      'A Next.js + WordPress powered blog sharing insights, tutorials, and updates.',
-    url: 'https://www.abhifind.com',
-    siteName: 'Abhifind Blog',
+      'Professional video production in Miami — cinematography, videography, lighting, and post-production by award-winning cinematographer Michael Valverde.',
+    url: 'https://www.albacorapictures.com',
+    siteName: 'Albacora Pictures Inc.',
     type: 'website',
+    images: [
+      {
+        url: 'https://www.albacorapictures.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Albacora Pictures Video Production',
+      },
+    ],
   },
   twitter: {
-    card: 'summary',
-    title: 'Abhifind Blog',
+    card: 'summary_large_image',
+    title: "Miami's Best Video Production Company | Albacora Pictures Inc.",
     description:
-      'A Next.js + WordPress powered blog sharing insights, tutorials, and updates.',
+      'High-quality video production services in Miami — commercial, corporate, documentary, and travel series.',
+    images: ['https://www.albacorapictures.com/twitter-image.jpg'],
   },
 };
 

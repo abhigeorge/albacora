@@ -1,115 +1,35 @@
-'use client';
-
-import { useActionState, useEffect, useRef } from 'react';
-import { useFormStatus } from 'react-dom';
-import { toast } from 'sonner';
-
+import type { Metadata } from 'next';
 import Breadcrumb from '../components/Breadcrumb';
-import { sendFormData, FormState } from '@/lib/actions';
 import { RevealLinks } from '../components/RevealLinks';
+import ContactForm from './ContactForm';
 
-const initialState: FormState = {
-  success: false,
-  message: '',
+export const metadata: Metadata = {
+  title: 'Contact Albacora Pictures | Miami Video Production Company',
+  description:
+    'Get in touch with Albacora Pictures Inc. — Miami’s trusted video production company. Reach out for commercial shoots, corporate videos, documentaries, and post-production services.',
+  openGraph: {
+    title: 'Contact Albacora Pictures | Miami Video Production Company',
+    description:
+      'Connect with Albacora Pictures for professional video production services in Miami. Let’s discuss your project today.',
+    url: 'https://www.albacorapictures.com/contact',
+    siteName: 'Albacora Pictures Inc.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Contact Albacora Pictures | Miami Video Production Company',
+    description:
+      'Reach out to Albacora Pictures Inc. for expert video production services in Miami.',
+  },
 };
 
-function SubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      className="w-full border border-white py-3 rounded-md
-        hover:bg-white hover:text-black transition
-        disabled:opacity-50"
-    >
-      {pending ? 'Sending…' : 'Submit Message'}
-    </button>
-  );
-}
-
 export default function ContactPage() {
-  const [state, formAction] = useActionState(sendFormData, initialState);
-  const formRef = useRef<HTMLFormElement>(null);
-
-  /* ----------------------------
-   * Toasts + Auto reset
-   * ---------------------------- */
-  useEffect(() => {
-    if (!state.message) return;
-
-    if (state.success) {
-      toast.success(state.message);
-      formRef.current?.reset();
-    } else {
-      toast.error(state.message);
-    }
-  }, [state]);
-
   return (
     <>
       <Breadcrumb title="Contact" className="bg-black" />
-
       <main className="bg-black text-white flex items-center justify-center px-4">
         <div className="w-full max-w-2xl">
-          <form ref={formRef} action={formAction} className="space-y-6">
-            {/* Honeypot (hidden) */}
-            <input
-              type="text"
-              name="company"
-              tabIndex={-1}
-              autoComplete="off"
-              className="hidden"
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <input
-                  type="text"
-                  name="full-name"
-                  placeholder="Name"
-                  required
-                  className="w-full bg-black border border-white/30 rounded-md px-4 py-3 text-white"
-                />
-                {state.errors?.['full-name'] && (
-                  <p className="text-red-400 text-sm mt-1">
-                    {state.errors['full-name']}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  required
-                  className="w-full bg-black border border-white/30 rounded-md px-4 py-3 text-white"
-                />
-                {state.errors?.email && (
-                  <p className="text-red-400 text-sm mt-1">
-                    {state.errors.email}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <textarea
-                name="message"
-                placeholder="Message"
-                rows={6}
-                required
-                className="w-full bg-black border border-white/30 px-4 py-3"
-              />
-              {state.errors?.message && (
-                <p className="text-red-400 text-sm">{state.errors.message}</p>
-              )}
-            </div>
-
-            <SubmitButton />
-          </form>
+          <ContactForm />
         </div>
       </main>
       <RevealLinks />
