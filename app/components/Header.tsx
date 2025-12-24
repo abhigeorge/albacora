@@ -31,7 +31,6 @@ export default function Header() {
     setOpen(false);
   }, [pathname]);
 
-  /* Close on ESC */
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setOpen(false);
@@ -43,7 +42,6 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full bg-transparent">
       <div className="flex h-20 items-center justify-between px-6 lg:px-10 pt-14">
-        {/* Logo */}
         <Link href="/" className="flex items-center gap-2 mt-8">
           <Image
             src="/logo.png"
@@ -55,7 +53,6 @@ export default function Header() {
           />
         </Link>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8 text-sm font-[var(--font-montserrat)] font-medium tracking-wider uppercase">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;

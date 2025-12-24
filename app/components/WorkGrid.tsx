@@ -121,12 +121,12 @@ const videos = [
     ],
   },
   {
-    videoSrc: 'https://player.vimeo.com/video/242626891',
-    title: 'Somos Loud (PSA)',
+    videoSrc: 'https://player.vimeo.com/video/274774169',
+    title: 'United We All Can (Documentary short)',
     subtitles: [
-      'Producer: Hector Torres',
-      'DP / Post: Michael Valverde',
-      'Albacora Pictures Inc.',
+      'Producer: Kristin Egan',
+      'Director / DP / Editor: Michael Valverde',
+      'TBN / Albacora Pictures Inc.',
     ],
   },
   {

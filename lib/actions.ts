@@ -25,7 +25,6 @@ export async function sendFormData(
   /* ----------------------------
    * Required by CF7
    * ---------------------------- */
-  console.log('WP_API_URL:', process.env.WP_API_URL);
   formData.append('_wpcf7_unit_tag', '88e941f');
 
   try {
