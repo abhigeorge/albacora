@@ -45,10 +45,11 @@ export default function Header() {
           <Image
             src="/logo.png"
             alt="Logo"
-            width={140}
-            height={40}
+            width={100}
+            height={30}
             priority
-            className="w-24 md:w-36 h-auto"
+            fetchPriority="high"
+            className="w-20 md:w-28 h-auto"
           />
         </Link>
 
