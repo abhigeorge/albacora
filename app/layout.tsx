@@ -3,6 +3,7 @@ import Header from './components/Header';
 import './globals.css';
 import { Montserrat } from 'next/font/google';
 import type { Metadata } from 'next';
+import { Toaster } from 'sonner';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -70,6 +71,9 @@ export default function RootLayout({
         </main>
 
         <Footer />
+
+        {/* ✅ Toast notifications (global, once) */}
+        <Toaster richColors position="top-right" />
       </body>
     </html>
   );
