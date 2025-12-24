@@ -22,9 +22,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
 
-  const res = await fetch(`${process.env.WP_API_URL}/posts?slug=${slug}`, {
-    cache: 'no-store',
-  });
+  const res = await fetch(
+    `${process.env.WP_API_URL}/wp-json/wp/v2/posts?slug=${slug}`,
+    {
+      cache: 'no-store',
+    }
+  );
 
   if (!res.ok) return { title: 'Post not found' };
 

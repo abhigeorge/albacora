@@ -1,7 +1,10 @@
 export async function getWorkVideos() {
-  const res = await fetch(`${process.env.WP_API_URL}/work_video?per_page=100`, {
-    next: { revalidate: 60 },
-  });
+  const res = await fetch(
+    `${process.env.WP_API_URL}/wp-json/wp/v2/work_video?per_page=100`,
+    {
+      next: { revalidate: 60 },
+    }
+  );
 
   const data = await res.json();
 

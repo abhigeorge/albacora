@@ -28,8 +28,14 @@ export async function sendFormData(
   formData.append('_wpcf7_unit_tag', '88e941f');
 
   try {
+    const WP_API_URL = process.env.WP_API_URL;
+
+    if (!WP_API_URL) {
+      throw new Error('WP_API_URL is not defined');
+    }
+
     const response = await fetch(
-      'https://www.abhifind.com/wp-json/contact-form-7/v1/contact-forms/132/feedback',
+      `${WP_API_URL}/wp-json/contact-form-7/v1/contact-forms/132/feedback`,
       {
         method: 'POST',
         body: formData,

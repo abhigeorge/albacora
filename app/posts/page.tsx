@@ -35,7 +35,7 @@ export default async function PostsPage({
   const res = await fetch(
     `${
       process.env.WP_API_URL
-    }/posts?_embed&per_page=${POSTS_PER_PAGE}&page=${currentPage}${
+    }/wp-json/wp/v2/posts?_embed&per_page=${POSTS_PER_PAGE}&page=${currentPage}${
       category ? `&categories=${category}` : ''
     }`,
     { next: { revalidate: 60 } }
