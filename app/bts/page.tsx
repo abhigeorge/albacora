@@ -1,4 +1,5 @@
 import Breadcrumb from '../components/Breadcrumb';
+import { FooterTop } from '../components/FooterTop';
 import MasonryGrid from '../components/MasonryGrid';
 
 const images = Array.from({ length: 100 }).map((_, i) => ({
@@ -14,6 +15,7 @@ export default function GalleryPage() {
       <main className="px-4 py-20 mb-20">
         <MasonryGrid images={images} />
       </main>
+      <FooterTop />
     </>
   );
 }

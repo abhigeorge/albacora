@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import michaelValverde from '@/public/michael-valverde.webp';
 import ButtonLink from '../components/ButtonLink';
 import Breadcrumb from '../components/Breadcrumb';
+import { FooterTop } from '../components/FooterTop';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -177,6 +178,7 @@ export default function AboutPage() {
           </motion.div>
         </section>
       </motion.main>
+      <FooterTop />
     </>
   );
 }

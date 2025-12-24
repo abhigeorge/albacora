@@ -1,4 +1,5 @@
 import ButtonLink from './components/ButtonLink';
+import { FooterTop } from './components/FooterTop';
 import Hero from './components/Hero';
 import TestimonialSlider from './components/Testimonials';
 import VideoLftGrid from './components/VideoLeftGrid';
@@ -18,6 +19,7 @@ export default function Home() {
         </ButtonLink>
       </div>
       <TestimonialSlider />
+      <FooterTop />
     </>
   );
 }

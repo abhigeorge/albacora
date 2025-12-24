@@ -2,6 +2,7 @@
 
 import Breadcrumb from '../components/Breadcrumb';
 import ButtonLink from '../components/ButtonLink';
+import { FooterTop } from '../components/FooterTop';
 import WorkGrid from '../components/WorkGrid';
 
 export default function WorkPage() {
@@ -19,6 +20,7 @@ export default function WorkPage() {
           MORE WORK
         </ButtonLink>
       </div>
+      <FooterTop />
     </>
   );
 }

@@ -2,6 +2,7 @@
 
 import Breadcrumb from '../components/Breadcrumb';
 import ButtonLink from '../components/ButtonLink';
+import { FooterTop } from '../components/FooterTop';
 import VideoGrid from '../components/VideoGrid';
 
 export default function VideoPage() {
@@ -19,6 +20,7 @@ export default function VideoPage() {
           MORE WORK
         </ButtonLink>
       </div>
+      <FooterTop />
     </>
   );
 }
