@@ -57,7 +57,7 @@ export default async function PostPage({
   const { slug } = await params;
 
   const res = await fetch(
-    `${process.env.WP_API_URL}/posts?slug=${slug}&_embed`,
+    `${process.env.WP_API_URL}/wp-json/wp/v2/posts?slug=${slug}&_embed`,
     { cache: 'no-store' }
   );
 
