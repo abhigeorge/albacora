@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 type Props = {
   images: string[];
@@ -14,141 +15,156 @@ export default function Lightbox({ images, index, onClose }: Props) {
   const [scale, setScale] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
-  const startTouch = useRef<{ x: number; y: number } | null>(null);
-  const isPanning = useRef(false);
+  const lastTap = useRef(0);
+  const pinchDistance = useRef<number | null>(null);
 
-  /* ---------------- Keyboard Controls ---------------- */
+  /* ---------------- Navigation ---------------- */
+  const next = () => reset(() => setCurrent((c) => (c + 1) % images.length));
+
+  const prev = () =>
+    reset(() => setCurrent((c) => (c - 1 + images.length) % images.length));
+
+  const reset = (cb?: () => void) => {
+    setScale(1);
+    setOffset({ x: 0, y: 0 });
+    cb?.();
+  };
+
+  /* ---------------- Keyboard ---------------- */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
       if (e.key === 'ArrowRight') next();
       if (e.key === 'ArrowLeft') prev();
     };
-
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [current]);
+  }, []);
 
-  /* ---------------- Navigation ---------------- */
-  const next = () => {
-    setScale(1);
-    setOffset({ x: 0, y: 0 });
-    setCurrent((c) => (c + 1) % images.length);
-  };
+  /* ---------------- Preload Next ---------------- */
+  useEffect(() => {
+    const img = new window.Image();
+    img.src = images[(current + 1) % images.length];
+  }, [current, images]);
 
-  const prev = () => {
-    setScale(1);
-    setOffset({ x: 0, y: 0 });
-    setCurrent((c) => (c - 1 + images.length) % images.length);
-  };
-
-  /* ---------------- Swipe Support ---------------- */
-  const onTouchStart = (e: React.TouchEvent) => {
-    startTouch.current = {
-      x: e.touches[0].clientX,
-      y: e.touches[0].clientY,
-    };
-  };
-
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (!startTouch.current) return;
-
-    const dx = e.changedTouches[0].clientX - startTouch.current.x;
-
-    if (Math.abs(dx) > 50) {
-      dx < 0 ? next() : prev();
-    }
-
-    startTouch.current = null;
-  };
-
-  /* ---------------- Zoom ---------------- */
+  /* ---------------- Zoom (Wheel) ---------------- */
   const onWheel = (e: React.WheelEvent) => {
     e.preventDefault();
     setScale((s) => Math.min(4, Math.max(1, s - e.deltaY * 0.002)));
   };
 
-  /* ---------------- Pan ---------------- */
-  const onMouseDown = () => {
-    if (scale > 1) isPanning.current = true;
+  /* ---------------- Double Tap ---------------- */
+  const onTap = () => {
+    const now = Date.now();
+    if (now - lastTap.current < 300) {
+      setScale((s) => (s === 1 ? 2 : 1));
+      setOffset({ x: 0, y: 0 });
+    }
+    lastTap.current = now;
   };
 
-  const onMouseUp = () => {
-    isPanning.current = false;
+  /* ---------------- Pinch Zoom ---------------- */
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (!pinchDistance.current) {
+        pinchDistance.current = distance;
+        return;
+      }
+
+      const delta = distance - pinchDistance.current;
+      setScale((s) => Math.min(4, Math.max(1, s + delta * 0.005)));
+      pinchDistance.current = distance;
+    }
   };
 
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!isPanning.current) return;
-    setOffset((o) => ({
-      x: o.x + e.movementX,
-      y: o.y + e.movementY,
-    }));
+  const onTouchEnd = () => {
+    pinchDistance.current = null;
   };
-
-  /* ---------------- Preload Next Image ---------------- */
-  useEffect(() => {
-    const nextIndex = (current + 1) % images.length;
-    const img = new window.Image();
-    img.src = images[nextIndex];
-  }, [current, images]);
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
-      onClick={(e) => e.target === e.currentTarget && onClose()}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-    >
-      <div
-        className="relative w-full h-full max-w-[95vw] max-h-[95vh] overflow-hidden"
-        onWheel={onWheel}
-        onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseUp}
-        onMouseMove={onMouseMove}
+    <AnimatePresence>
+      <motion.div
+        key={current}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 bg-black/90 flex flex-col"
+        onClick={(e) => e.target === e.currentTarget && onClose()}
       >
-        <Image
-          src={images[current]}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-contain select-none transition-transform duration-100"
-          style={{
-            transform: `translate(${offset.x}px, ${offset.y}px) scale(${scale})`,
-            cursor: scale > 1 ? 'grab' : 'zoom-in',
-          }}
-          draggable={false}
-        />
-      </div>
+        {/* Top bar */}
+        <div className="flex justify-between items-center p-4 text-white text-sm">
+          <span>
+            {current + 1} / {images.length}
+          </span>
+          <button onClick={onClose} className="text-xl">
+            ✕
+          </button>
+        </div>
 
-      {/* Navigation buttons */}
-      <button
-        onClick={prev}
-        className="absolute left-4 text-white text-4xl"
-        aria-label="Previous image"
-      >
-        ‹
-      </button>
+        {/* Image */}
+        <div
+          className="relative flex-1 overflow-hidden"
+          onWheel={onWheel}
+          onClick={onTap}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
+          <motion.div
+            className="absolute inset-0"
+            animate={{ scale, x: offset.x, y: offset.y }}
+            transition={{ type: 'spring', stiffness: 120, damping: 20 }}
+          >
+            <Image
+              src={images[current]}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="object-contain select-none"
+              draggable={false}
+            />
+          </motion.div>
 
-      <button
-        onClick={next}
-        className="absolute right-4 text-white text-4xl"
-        aria-label="Next image"
-      >
-        ›
-      </button>
+          {/* Arrows */}
+          <button
+            onClick={prev}
+            className="absolute left-4 top-1/2 text-white text-4xl"
+          >
+            ‹
+          </button>
+          <button
+            onClick={next}
+            className="absolute right-4 top-1/2 text-white text-4xl"
+          >
+            ›
+          </button>
+        </div>
 
-      {/* Close */}
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 text-white text-2xl"
-        aria-label="Close"
-      >
-        ✕
-      </button>
-    </div>
+        {/* Thumbnail strip */}
+        <div className="flex gap-2 overflow-x-auto p-4 bg-black/80">
+          {images.map((src, i) => (
+            <button
+              key={i}
+              onClick={() => reset(() => setCurrent(i))}
+              className={`relative h-16 w-24 flex-shrink-0 rounded overflow-hidden
+                ${i === current ? 'ring-2 ring-white' : 'opacity-70'}
+              `}
+            >
+              <Image
+                src={src}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="96px"
+              />
+            </button>
+          ))}
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }
