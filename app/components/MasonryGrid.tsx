@@ -5,7 +5,8 @@ import Lightbox from './Lightbox';
 import MasonryItem from './MasonryItem';
 
 type ImageItem = {
-  src: string;
+  thumbSrc: string;
+  fullSrc: string;
   width: number;
   height: number;
 };
@@ -39,7 +40,7 @@ export default function MasonryGrid({ images }: Props) {
 
       {lightboxIndex !== null && (
         <Lightbox
-          images={images}
+          images={images.map((img) => img.fullSrc)} // ✅ high-res only
           index={lightboxIndex}
           onClose={() => setLightboxIndex(null)}
         />
