@@ -4,7 +4,7 @@ import ButtonLink from './ButtonLink';
 
 export default function Hero() {
   return (
-    <section className="relative flex items-center justify-center min-h-[70vh] bg-black text-white overflow-hidden">
+    <section className="relative flex items-center justify-center min-h-[80vh] bg-black text-white overflow-hidden">
       <div className="text-center px-6 lg:px-12">
         {/* Animated Title */}
         <h1
