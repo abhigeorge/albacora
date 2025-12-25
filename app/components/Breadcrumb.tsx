@@ -16,7 +16,7 @@ export default function Breadcrumb({
 }: BreadcrumbProps) {
   return (
     <section
-      className={`relative flex items-center justify-center min-h-[20vh] sm:min-h-[40vh] md:min-h-[40vh] bg-black text-white overflow-hidden ${
+      className={`relative flex items-center justify-center min-h-[30vh] sm:min-h-[40vh] md:min-h-[40vh] bg-black text-white overflow-hidden ${
         className ?? ''
       }`}
     >
