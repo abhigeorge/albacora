@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import michaelValverde from '@/public/michael-valverde.webp';
+import michaelValverde from '@/public/michael-valverde-albacora-pictures.webp';
 import ButtonLink from '../components/ButtonLink';
 import Breadcrumb from '../components/Breadcrumb';
 import { FooterTop } from '../components/FooterTop';
-import MotionMain from '../components/MotionMain'; // ✅ client wrapper
-import MotionDiv from '../components/MotionDiv'; // optional wrapper if you make one
+import MotionMain from '../components/MotionMain';
+import MotionDiv from '../components/MotionDiv';
 
 export const metadata: Metadata = {
   title: 'About Albacora Pictures | Miami Video Production Experts',
