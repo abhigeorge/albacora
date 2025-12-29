@@ -107,7 +107,9 @@ export default function TestimonialSlider() {
                     className="rounded-full object-cover"
                   />
                   <div>
-                    <h5 className="text-white font-medium">{t.name}</h5>
+                    <span className="block text-white font-medium">
+                      {t.name}
+                    </span>
                     <span className="text-sm text-white">{t.role}</span>
                   </div>
                 </div>
